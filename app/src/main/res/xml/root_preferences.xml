@@ -1,0 +1,19 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <EditTextPreference
+        app:key="address"
+        app:title="@string/api_address"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        app:key="key"
+        app:title="@string/api_key"
+        app:useSimpleSummaryProvider="true" />
+
+    <EditTextPreference
+        app:key="lang"
+        app:title="@string/lang_code"
+        app:useSimpleSummaryProvider="true" />
+
+
+</PreferenceScreen>
