@@ -42,9 +42,9 @@ public class EpisodeDetailsActivity extends AppCompatActivity {
 
         JsonObjectRequest episodeRequest = new JsonObjectRequest(Request.Method.GET, episodeUrl, null, response -> {
             try {
-                JSONObject plot = response.getJSONObject("description");
+                String plot = response.getString("description");
                 TextView textViewPlot = findViewById(R.id.textViewPlot);
-                textViewPlot.setText(plot.getString(lang));
+                textViewPlot.setText(plot);
             } catch (JSONException e) {
                 Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
                 e.printStackTrace();
