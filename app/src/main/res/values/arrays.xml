@@ -1,2 +1,10 @@
 <resources>
+    <string-array name="lang">
+        <item>en</item>
+        <item>cs</item>
+    </string-array>
+    <string-array name="languages">
+        <item>English</item>
+        <item>Čeština</item>>
+    </string-array>
 </resources>

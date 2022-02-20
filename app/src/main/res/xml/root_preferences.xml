@@ -1,4 +1,5 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <EditTextPreference
         app:key="address"
@@ -10,10 +11,12 @@
         app:title="@string/api_key"
         app:useSimpleSummaryProvider="true" />
 
-    <EditTextPreference
-        app:key="lang"
-        app:title="@string/lang_code"
-        app:useSimpleSummaryProvider="true" />
+    <ListPreference
+        android:defaultValue="false"
+        android:entries="@array/languages"
+        android:entryValues="@array/lang"
+        android:key="lang"
+        android:title="@string/lang_code" />
 
 
 </PreferenceScreen>

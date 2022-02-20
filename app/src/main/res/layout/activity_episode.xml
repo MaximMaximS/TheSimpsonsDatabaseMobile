@@ -14,10 +14,8 @@
         android:text="@string/episode_name"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/textViewName"
-        app:layout_constraintBottom_toBottomOf="@id/textViewName"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="10dp" />
+        app:layout_constraintTop_toTopOf="@id/textViewName" />
 
     <TextView
         android:id="@+id/textViewName"
@@ -39,10 +37,8 @@
         android:text="@string/premiere"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/textViewPremiere"
-        app:layout_constraintBottom_toBottomOf="@id/textViewPremiere"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="42dp" />
+        app:layout_constraintTop_toTopOf="@id/textViewPremiere" />
 
     <TextView
         android:id="@+id/textViewPremiere"
@@ -64,10 +60,8 @@
         android:text="@string/direction"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/textViewDirection"
-        app:layout_constraintBottom_toBottomOf="@id/textViewDirection"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="74dp" />
+        app:layout_constraintTop_toTopOf="@id/textViewDirection" />
 
     <TextView
         android:id="@+id/textViewDirection"
@@ -89,10 +83,8 @@
         android:text="@string/screenplay"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toTopOf="@id/textViewScreenplay"
-        app:layout_constraintBottom_toBottomOf="@id/textViewScreenplay"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="106dp" />
+        app:layout_constraintTop_toTopOf="@id/textViewScreenplay" />
 
     <TextView
         android:id="@+id/textViewScreenplay"

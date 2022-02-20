@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="description">Jednoduchá aplikace pro evidenci zhlédnutých epizod</string>
+    <string name="search_episode">Vyhledat díly</string>
+    <string name="search">Vyhledat</string>
+    <string name="episode_hint">Název dílu</string>
+    <string name="submit">Potvrdit</string>
+
+    <string name="episode_name">Název:</string>
+    <string name="premiere">Premiéra:</string>
+    <string name="screenplay">Scénář:</string>
+    <string name="direction">Režie:</string>
+    <string name="watched">Zhlédnuto:</string>
+    <string name="watched_on">Ano ✔️</string>
+    <string name="watched_off">Ne ❌</string>
+    <string name="view_details">Detaily</string>
+    <string name="plot">Děj:</string>
+
+    <string name="settings">Nastavení</string>
+    <string name="api_address">Adresa API</string>
+    <string name="api_key">API Klíč</string>
+    <string name="lang_code">Jazyk API</string>
+
+    <string name="no_api">Adresa serveru není nastavena!</string>
+    <string name="no_key">API klíč není nastaven!</string>
+
+
+    <string name="picker">Výběr dílu</string>
+    <string name="episode">Díl</string>
+
+
+    <string name="error">Něco se pokazilo!</string>
+    <string name="json_error">Došlo k JSON chybě!</string>
+    <string name="error_404">Položka nebyla nalezena!</string>
+    <string name="error_500">Došlo k interní chybě serveru!</string>
+    <string name="error_401">Neplatná autorizace!</string>
+    <string name="error_400">Chybný dotaz!</string>
+</resources>

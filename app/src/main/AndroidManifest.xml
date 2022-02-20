@@ -14,7 +14,8 @@
         android:theme="@style/Theme.TheSimpsonsDatabaseMobile">
         <activity
             android:name=".EpisodeDetailsActivity"
-            android:exported="true"/>
+            android:exported="true"
+            android:label="@string/view_details"/>
         <activity
             android:name=".SettingsActivity"
             android:exported="true"

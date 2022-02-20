@@ -2,6 +2,7 @@ package io.github.maximmaxims.thesimpsonsdatabasemobile;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,14 +14,13 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 public class EpisodeDetailsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_details);
+        setContentView(R.layout.activity_episode_details);
 
         Intent intent = getIntent();
         int episodeId = intent.getIntExtra(EpisodeActivity.EPISODEDETAILS, 0);
@@ -44,6 +44,7 @@ public class EpisodeDetailsActivity extends AppCompatActivity {
             try {
                 String plot = response.getString("description");
                 TextView textViewPlot = findViewById(R.id.textViewPlot);
+                textViewPlot.setMovementMethod(new ScrollingMovementMethod());
                 textViewPlot.setText(plot);
             } catch (JSONException e) {
                 Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
