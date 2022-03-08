@@ -26,11 +26,6 @@
             android:exported="true"
             android:parentActivityName=".EpisodeSearchActivity" />
         <activity
-            android:name=".EpisodePickerActivity"
-            android:exported="true"
-            android:label="@string/picker"
-            android:parentActivityName=".EpisodeSearchActivity" />
-        <activity
             android:name=".EpisodeSearchActivity"
             android:exported="true"
             android:label="@string/search"

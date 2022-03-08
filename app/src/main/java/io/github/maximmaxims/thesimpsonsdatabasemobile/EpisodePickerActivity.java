@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EpisodePickerActivity extends AppCompatActivity {
-    public static final String EPISODE = "io.github.maximmaxims.thesimpsonsdatabasemobile.EPISODE";
+
     private JSONArray episodes;
 
     @Override
@@ -59,7 +59,7 @@ public class EpisodePickerActivity extends AppCompatActivity {
         Intent intent = new Intent(this, EpisodeActivity.class);
         try {
             JSONObject episode = episodes.getJSONObject(position);
-            intent.putExtra(EPISODE, episode.getInt("overallId"));
+            intent.putExtra(EpisodeActivity.EPISODEID, episode.getInt("overallId"));
             startActivity(intent);
         } catch (JSONException e) {
             Snackbar.make(view, R.string.json_error, Snackbar.LENGTH_SHORT).show();

@@ -13,7 +13,7 @@
         android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="parent" />
 
     <Button
         android:id="@+id/button2"
@@ -24,6 +24,6 @@
         android:text="@string/submit"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinnerEpisodes" />
+        app:layout_constraintTop_toBottomOf="@id/spinnerEpisodes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

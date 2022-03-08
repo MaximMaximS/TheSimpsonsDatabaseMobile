@@ -106,9 +106,9 @@
         android:text="@string/watched"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@+id/switchWatched"
+        app:layout_constraintBottom_toBottomOf="@id/switchWatched"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/switchWatched" />
+        app:layout_constraintTop_toTopOf="@id/switchWatched" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switchWatched"
@@ -120,17 +120,42 @@
         android:enabled="false"
         android:onClick="markEpisode"
         android:textSize="20sp"
-        app:layout_constraintStart_toEndOf="@+id/textView5"
-        app:layout_constraintTop_toBottomOf="@+id/textViewScreenplay" />
+        app:layout_constraintStart_toEndOf="@id/textView5"
+        app:layout_constraintTop_toBottomOf="@id/textViewScreenplay" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/buttonPrevious"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:contentDescription="@string/previous"
+        android:onClick="openPrevious"
+        android:scaleX="-1"
+        app:layout_constraintBottom_toBottomOf="@id/buttonDetails"
+        app:layout_constraintEnd_toStartOf="@id/buttonDetails"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/buttonDetails"
+        app:srcCompat="@drawable/baseline_arrow_right_alt_black_48dp" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginBottom="15dp"
         android:onClick="openDetails"
         android:text="@string/view_details"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/switchWatched" />
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttonNext"
+        app:layout_constraintStart_toEndOf="@id/buttonPrevious" />
+
+    <ImageButton
+        android:id="@+id/buttonNext"
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:contentDescription="@string/next"
+        android:onClick="openNext"
+        app:layout_constraintBottom_toBottomOf="@id/buttonDetails"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/buttonDetails"
+        app:layout_constraintTop_toTopOf="@id/buttonDetails"
+        app:srcCompat="@drawable/baseline_arrow_right_alt_black_48dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

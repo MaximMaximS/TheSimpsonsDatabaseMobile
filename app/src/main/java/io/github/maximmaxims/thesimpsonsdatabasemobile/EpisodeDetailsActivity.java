@@ -23,7 +23,7 @@ public class EpisodeDetailsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_episode_details);
 
         Intent intent = getIntent();
-        int episodeId = intent.getIntExtra(EpisodeActivity.EPISODEDETAILS, 0);
+        int episodeId = intent.getIntExtra(EpisodeActivity.EPISODEID, 0);
 
         RequestQueue queue = Volley.newRequestQueue(this);
         View view = findViewById(android.R.id.content);
@@ -41,6 +41,7 @@ public class EpisodeDetailsActivity extends AppCompatActivity {
         String episodeUrl = root + "extra/description/" + lang + "/" + episodeId;
 
         JsonObjectRequest episodeRequest = new JsonObjectRequest(Request.Method.GET, episodeUrl, null, response -> {
+            // On response:
             try {
                 String plot = response.getString("description");
                 TextView textViewPlot = findViewById(R.id.textViewPlot);
@@ -50,21 +51,26 @@ public class EpisodeDetailsActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-        }, error -> {
-            int code = error.networkResponse.statusCode;
-            switch (code) {
-                case 404:
-                    Snackbar.make(view, R.string.error_404, Snackbar.LENGTH_SHORT).show();
-                    break;
-                case 500:
-                    Snackbar.make(view, R.string.error_500, Snackbar.LENGTH_SHORT).show();
-                    break;
-                case 400:
-                    Snackbar.make(view, R.string.error_400, Snackbar.LENGTH_SHORT).show();
-                    break;
-                default:
-                    Snackbar.make(view, getResources().getString(R.string.error) + "(" + code + ")", Snackbar.LENGTH_SHORT).show();
+       }, error -> {
+            // On error:
+            // If network response was obtained
+            if (error.networkResponse != null) {
+                int code = error.networkResponse.statusCode;
+                switch (code) {
+                    case 404:
+                        Snackbar.make(view, R.string.error_404, Snackbar.LENGTH_SHORT).show();
+                        break;
+                    case 500:
+                        Snackbar.make(view, R.string.error_500, Snackbar.LENGTH_SHORT).show();
+                        break;
+                    case 400:
+                        Snackbar.make(view, R.string.error_400, Snackbar.LENGTH_SHORT).show();
+                        break;
+                    default:
+                        Snackbar.make(view, getResources().getString(R.string.error) + "(" + code + ")", Snackbar.LENGTH_SHORT).show();
+                }
             }
+            Snackbar.make(view, getResources().getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
         });
         queue.add(episodeRequest);
     }

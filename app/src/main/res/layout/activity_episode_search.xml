@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".EpisodeSearchActivity" >
+    tools:context=".EpisodeSearchActivity">
 
     <EditText
         android:id="@+id/editTextEpisodeName"
@@ -18,7 +18,7 @@
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSearchEpisode"
+        app:layout_constraintEnd_toStartOf="@id/buttonSearchEpisode"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:ignore="TextContrastCheck" />
@@ -27,13 +27,46 @@
         android:id="@+id/buttonSearchEpisode"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
         android:layout_marginEnd="10dp"
         android:minHeight="48dp"
         android:onClick="searchEpisode"
         android:text="@string/search"
+        app:layout_constraintBottom_toBottomOf="@id/editTextEpisodeName"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/editTextEpisodeName"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/editTextEpisodeName"
+        app:layout_constraintTop_toTopOf="@id/editTextEpisodeName" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circularProgressIndicatorSearch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/buttonSearchEpisode"
+        app:layout_constraintEnd_toEndOf="@id/buttonSearchEpisode"
+        app:layout_constraintStart_toStartOf="@id/buttonSearchEpisode"
+        app:layout_constraintTop_toTopOf="@id/editTextEpisodeName" />
+
+    <Spinner
+        android:id="@+id/spinnerEpisodes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonSearchEpisode" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:onClick="openEpisode"
+        android:text="@string/submit"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/spinnerEpisodes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

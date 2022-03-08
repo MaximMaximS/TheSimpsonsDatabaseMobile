@@ -36,4 +36,8 @@
     <string name="error_500">Internal server error occurred!</string>
     <string name="error_401">Invalid authorization!</string>
     <string name="error_400">Invalid query!</string>
+    <string name="no_internet">No internet connection!</string>
+
+    <string name="previous">Previous </string>
+    <string name="next">Next</string>
 </resources>

@@ -35,4 +35,8 @@
     <string name="error_500">Došlo k interní chybě serveru!</string>
     <string name="error_401">Neplatná autorizace!</string>
     <string name="error_400">Chybný dotaz!</string>
+    <string name="no_internet">Není připojení k internetu!</string>
+
+    <string name="previous">Předchozí </string>
+    <string name="next">Následující</string>
 </resources>
