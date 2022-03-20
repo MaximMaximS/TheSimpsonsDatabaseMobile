@@ -5,7 +5,7 @@
     <string name="search_episode">Search for episodes</string>
     <string name="search">Search</string>
     <string name="episode_hint">Episode name</string>
-    <string name="submit">Submit</string>
+    <string name="open_button">Open</string>
 
     <string name="episode_name">Name:</string>
     <string name="premiere">Premiere:</string>
@@ -36,4 +36,16 @@
     <string name="error_500">Internal server error occurred!</string>
     <string name="error_401">Invalid authorization!</string>
     <string name="error_400">Invalid query!</string>
+    <string name="error_429">Too many requests!</string>
+    <string name="no_internet">Cannot connect to the server!</string>
+    <string name="not_filled">Please fill in required fields!</string>
+
+    <string name="previous">Previous</string>
+    <string name="next">Next</string>
+
+    <string name="season_prefix">S:</string>
+    <string name="episode_prefix">E:</string>
+    <string name="bynumber">Search by number</string>
+    <string name="byname">Search by name</string>
+    <string name="close">Close</string>
 </resources>

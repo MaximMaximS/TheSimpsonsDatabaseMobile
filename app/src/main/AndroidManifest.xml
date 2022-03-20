@@ -15,7 +15,7 @@
         <activity
             android:name=".EpisodeDetailsActivity"
             android:exported="true"
-            android:label="@string/view_details"/>
+            android:label="@string/view_details" />
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
@@ -24,11 +24,6 @@
         <activity
             android:name=".EpisodeActivity"
             android:exported="true"
-            android:parentActivityName=".EpisodeSearchActivity" />
-        <activity
-            android:name=".EpisodePickerActivity"
-            android:exported="true"
-            android:label="@string/picker"
             android:parentActivityName=".EpisodeSearchActivity" />
         <activity
             android:name=".EpisodeSearchActivity"
