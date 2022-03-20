@@ -30,7 +30,7 @@ public class EpisodeActivity extends AppCompatActivity {
         Intent intent = getIntent();
         episodeId = intent.getIntExtra(EpisodeActivity.EPISODEID, 0);
 
-        updateData();
+        updateData(findViewById(android.R.id.content));
     }
 
     private void enableButtons(boolean enable) {
@@ -43,17 +43,16 @@ public class EpisodeActivity extends AppCompatActivity {
         findViewById(R.id.buttonDetails).setEnabled(enable);
     }
 
-    public void updateData() {
+    public void updateData(View view) {
 
         enableButtons(false);
         RequestQueue queue = Volley.newRequestQueue(this);
-        View view = findViewById(android.R.id.content);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String lang = preferences.getString("lang", "en");
         String root2 = preferences.getString("address", "");
 
         if (root2.equals("")) {
-            Snackbar.make(view, R.string.no_api, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(view, R.string.no_api, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
             return;
         }
         if (!root2.endsWith("/")) {
@@ -77,12 +76,15 @@ public class EpisodeActivity extends AppCompatActivity {
                 textViewDirection.setText(episode.getString("direction"));
                 textViewScreenplay.setText(episode.getString("screenplay"));
             } catch (JSONException e) {
-                Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
                 e.printStackTrace();
+                enableButtons(true);
+                return;
             }
             String key = preferences.getString("key", "");
             if (key.equals("")) {
-                Snackbar.make(view, R.string.no_key, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, R.string.no_key, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
+                enableButtons(true);
                 return;
             }
             String watchedUrl = root + "watched/" + episodeId + "/?api_key=" + key;
@@ -102,8 +104,10 @@ public class EpisodeActivity extends AppCompatActivity {
                         errMessage = getResources().getString(R.string.error_429);
                         break;
                     case 404:
-                        errMessage = getResources().getString(R.string.error_404);
-                        break;
+                        // errMessage = getResources().getString(R.string.error_404);
+                        episodeId--;
+                        updateData(view);
+                        return;
                     case 500:
                         errMessage = getResources().getString(R.string.error_500);
                         break;
@@ -118,8 +122,9 @@ public class EpisodeActivity extends AppCompatActivity {
                     errMessage = getResources().getString(R.string.error);
                 }
             }
-            Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).setAnchorView(R.id.buttonPrevious).show();
         });
+
         queue.add(episodeRequest);
 
 
@@ -137,7 +142,8 @@ public class EpisodeActivity extends AppCompatActivity {
             String root = preferences.getString("address", "");
 
             if (root.equals("")) {
-                Snackbar.make(view, R.string.no_api, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, R.string.no_api, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
+                enableButtons(true);
                 return;
             }
             if (!root.endsWith("/")) {
@@ -145,7 +151,8 @@ public class EpisodeActivity extends AppCompatActivity {
             }
             String key = preferences.getString("key", "");
             if (key.equals("")) {
-                Snackbar.make(view, R.string.no_key, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, R.string.no_key, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
+                enableButtons(true);
                 return;
             }
             String watchedUrl = root + "watched/" + episodeId + "/?api_key=" + key;
@@ -155,9 +162,10 @@ public class EpisodeActivity extends AppCompatActivity {
                 try {
                     boolean watched = response.getBoolean("watched");
                     enableButtons(true);
+                    findViewById(R.id.switchWatched).setEnabled(true);
                     switchMaterial.setChecked(watched);
                 } catch (JSONException e) {
-                    Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
                     e.printStackTrace();
                 }
             }, error -> {
@@ -193,12 +201,12 @@ public class EpisodeActivity extends AppCompatActivity {
                         errMessage = getResources().getString(R.string.error);
                     }
                 }
-                Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
 
             });
             queue.add(postWatched);
         } catch (JSONException e) {
-            Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
             e.printStackTrace();
         }
     }
@@ -209,10 +217,11 @@ public class EpisodeActivity extends AppCompatActivity {
             try {
                 boolean watched = response.getBoolean("watched");
                 SwitchMaterial switchMaterial = findViewById(R.id.switchWatched);
+                findViewById(R.id.switchWatched).setEnabled(true);
                 enableButtons(true);
                 switchMaterial.setChecked(watched);
             } catch (JSONException e) {
-                Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
+                Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
                 e.printStackTrace();
             }
         }, error -> {
@@ -244,7 +253,7 @@ public class EpisodeActivity extends AppCompatActivity {
                     errMessage = getResources().getString(R.string.error);
                 }
             }
-            Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).setAnchorView(R.id.buttonPrevious).show();
 
 
         });
@@ -258,13 +267,16 @@ public class EpisodeActivity extends AppCompatActivity {
     }
 
     public void openPrevious(View view) {
-        episodeId--;
-        updateData();
+        if (episodeId > 1) {
+            episodeId--;
+            updateData(view);
+        }
+
     }
 
     public void openNext(View view) {
         episodeId++;
-        updateData();
+        updateData(view);
     }
 
 }

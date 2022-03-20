@@ -60,7 +60,11 @@ public class EpisodeSearchActivity extends AppCompatActivity {
         String url = preferences.getString("address", "");
         if (url.equals("")) {
             Snackbar.make(view, R.string.no_api, Snackbar.LENGTH_SHORT).show();
+            enableButtons(true);
+            circularProgressIndicatorSearch.setVisibility(View.INVISIBLE);
+            buttonSearchEpisode.setVisibility(View.VISIBLE);
             return;
+
         }
         if (!url.endsWith("/")) {
             url += "/";
@@ -68,6 +72,9 @@ public class EpisodeSearchActivity extends AppCompatActivity {
         String query = editTextEpisodeName.getText().toString();
         if (query.equals("")) {
             Snackbar.make(view, R.string.not_filled, Snackbar.LENGTH_SHORT).show();
+            enableButtons(true);
+            circularProgressIndicatorSearch.setVisibility(View.INVISIBLE);
+            buttonSearchEpisode.setVisibility(View.VISIBLE);
             return;
         }
 
@@ -76,9 +83,7 @@ public class EpisodeSearchActivity extends AppCompatActivity {
 
         // Request
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
-            enableButtons(true);
-            circularProgressIndicatorSearch.setVisibility(View.INVISIBLE);
-            buttonSearchEpisode.setVisibility(View.VISIBLE);
+
             // On response:
 
             // Populate spinner
@@ -107,6 +112,9 @@ public class EpisodeSearchActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+            enableButtons(true);
+            circularProgressIndicatorSearch.setVisibility(View.INVISIBLE);
+            buttonSearchEpisode.setVisibility(View.VISIBLE);
 
         }, error -> {
             enableButtons(true);
@@ -172,6 +180,9 @@ public class EpisodeSearchActivity extends AppCompatActivity {
         EditText episodeIdField = findViewById(R.id.editTextEpisodeNumber);
         if (seasonIdField.getText().toString().equals("") || episodeIdField.getText().toString().equals("")) {
             Snackbar.make(view, R.string.not_filled, Snackbar.LENGTH_SHORT).show();
+            enableButtons(true);
+            circularProgressIndicatorSearch.setVisibility(View.INVISIBLE);
+            buttonSearchEpisode.setVisibility(View.VISIBLE);
             return;
         }
         int seasonId = Integer.parseInt(seasonIdField.getText().toString());
@@ -183,6 +194,9 @@ public class EpisodeSearchActivity extends AppCompatActivity {
         String url = preferences.getString("address", "");
         if (url.equals("")) {
             Snackbar.make(view, R.string.no_api, Snackbar.LENGTH_SHORT).show();
+            enableButtons(true);
+            circularProgressIndicatorSearch.setVisibility(View.INVISIBLE);
+            buttonSearchEpisode.setVisibility(View.VISIBLE);
             return;
         }
         if (!url.endsWith("/")) {
@@ -192,9 +206,7 @@ public class EpisodeSearchActivity extends AppCompatActivity {
         url += "id/" + seasonId + "/" + episodeId;
         // Request
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url, response -> {
-            enableButtons(true);
-            circularProgressIndicatorSearch.setVisibility(View.INVISIBLE);
-            buttonSearchEpisode.setVisibility(View.VISIBLE);
+
             // On response:
             try {
                 // Parse response
@@ -206,6 +218,9 @@ public class EpisodeSearchActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
+            enableButtons(true);
+            circularProgressIndicatorSearch.setVisibility(View.INVISIBLE);
+            buttonSearchEpisode.setVisibility(View.VISIBLE);
 
         }, error -> {
             enableButtons(true);
