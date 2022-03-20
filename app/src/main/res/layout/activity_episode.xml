@@ -33,11 +33,10 @@
         android:id="@+id/textView2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:text="@string/premiere"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView"
         app:layout_constraintTop_toTopOf="@id/textViewPremiere" />
 
     <TextView
@@ -46,9 +45,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewName"
         app:layout_constraintStart_toEndOf="@id/textView2"
         app:layout_constraintTop_toBottomOf="@id/textViewName" />
 
@@ -56,11 +54,10 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:text="@string/direction"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
         app:layout_constraintTop_toTopOf="@id/textViewDirection" />
 
     <TextView
@@ -69,9 +66,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewPremiere"
         app:layout_constraintStart_toEndOf="@id/textView3"
         app:layout_constraintTop_toBottomOf="@id/textViewPremiere" />
 
@@ -79,11 +75,10 @@
         android:id="@+id/textView4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:text="@string/screenplay"
         android:textSize="20sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView3"
         app:layout_constraintTop_toTopOf="@id/textViewScreenplay" />
 
     <TextView
@@ -92,9 +87,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:layout_marginTop="5dp"
-        android:layout_marginEnd="10dp"
         android:textSize="20sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/textViewDirection"
         app:layout_constraintStart_toEndOf="@id/textView4"
         app:layout_constraintTop_toBottomOf="@id/textViewDirection" />
 
@@ -102,12 +96,11 @@
         android:id="@+id/textView5"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
         android:text="@string/watched"
         android:textSize="20sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/switchWatched"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/textView4"
         app:layout_constraintTop_toTopOf="@id/switchWatched" />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -123,39 +116,49 @@
         app:layout_constraintStart_toEndOf="@id/textView5"
         app:layout_constraintTop_toBottomOf="@id/textViewScreenplay" />
 
-    <androidx.appcompat.widget.AppCompatImageButton
-        android:id="@+id/buttonPrevious"
-        android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:contentDescription="@string/previous"
-        android:onClick="openPrevious"
-        android:scaleX="-1"
-        app:layout_constraintBottom_toBottomOf="@id/buttonDetails"
-        app:layout_constraintEnd_toStartOf="@id/buttonDetails"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/buttonDetails"
-        app:srcCompat="@drawable/baseline_arrow_right_alt_black_48dp" />
-
     <Button
         android:id="@+id/buttonDetails"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
         android:onClick="openDetails"
         android:text="@string/view_details"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/buttonNext"
-        app:layout_constraintStart_toEndOf="@id/buttonPrevious" />
+        app:layout_constraintBottom_toBottomOf="@+id/switchWatched"
+        app:layout_constraintEnd_toEndOf="@+id/textViewScreenplay"
+        app:layout_constraintTop_toTopOf="@+id/switchWatched"
+        app:layout_constraintVertical_bias="1.0" />
 
-    <ImageButton
+    <Button
+        android:id="@+id/buttonPrevious"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="15dp"
+        android:onClick="openPrevious"
+        android:text="@string/previous"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/textViewEpisodeId" />
+
+    <TextView
+        android:id="@+id/textViewEpisodeId"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonPrevious"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/buttonPrevious"
+        tools:text="XXX" />
+
+    <Button
         android:id="@+id/buttonNext"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
-        android:contentDescription="@string/next"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
         android:onClick="openNext"
-        app:layout_constraintBottom_toBottomOf="@id/buttonDetails"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/buttonDetails"
-        app:layout_constraintTop_toTopOf="@id/buttonDetails"
-        app:srcCompat="@drawable/baseline_arrow_right_alt_black_48dp" />
+        android:text="@string/next"
+        app:layout_constraintBottom_toBottomOf="@+id/buttonPrevious"
+        app:layout_constraintStart_toEndOf="@id/textViewEpisodeId" />
 </androidx.constraintlayout.widget.ConstraintLayout>

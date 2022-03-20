@@ -6,67 +6,143 @@
     android:layout_height="match_parent"
     tools:context=".EpisodeSearchActivity">
 
+    <TextView
+        android:id="@+id/textViewNumberSearchHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/bynumber"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextSeasonNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:hint="@string/season_prefix"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned"
+        android:minHeight="48dp"
+        app:layout_constraintEnd_toStartOf="@id/editTextEpisodeNumber"
+        app:layout_constraintStart_toStartOf="@id/textViewNumberSearchHeader"
+        app:layout_constraintTop_toBottomOf="@id/textViewNumberSearchHeader" />
+
+    <EditText
+        android:id="@+id/editTextEpisodeNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:hint="@string/episode_prefix"
+        android:importantForAutofill="no"
+        android:inputType="numberSigned"
+        android:minHeight="48dp"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSeasonNumber"
+        app:layout_constraintEnd_toStartOf="@id/buttonSearchEpisodeByNumber"
+        app:layout_constraintStart_toEndOf="@+id/editTextSeasonNumber"
+        app:layout_constraintTop_toTopOf="@id/editTextSeasonNumber" />
+
+    <Button
+        android:id="@+id/buttonSearchEpisodeByNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:onClick="searchEpisodeByNumber"
+        android:text="@string/search"
+        app:layout_constraintBottom_toBottomOf="@+id/editTextSeasonNumber"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/editTextEpisodeNumber"
+        app:layout_constraintTop_toTopOf="@+id/editTextSeasonNumber"
+        tools:ignore="DuplicateSpeakableTextCheck" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circularProgressIndicatorSearchByNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="@id/buttonSearchEpisodeByNumber"
+        app:layout_constraintEnd_toEndOf="@id/buttonSearchEpisodeByNumber"
+        app:layout_constraintStart_toStartOf="@id/buttonSearchEpisodeByNumber"
+        app:layout_constraintTop_toTopOf="@id/buttonSearchEpisodeByNumber" />
+
     <EditText
         android:id="@+id/editTextEpisodeName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="40dp"
-        android:layout_marginEnd="30dp"
+        android:layout_marginTop="10dp"
         android:ems="10"
         android:hint="@string/episode_hint"
         android:importantForAutofill="no"
         android:inputType="textPersonName"
         android:minHeight="48dp"
-        app:layout_constraintEnd_toStartOf="@id/buttonSearchEpisode"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/buttonSearchEpisodeByName"
+        app:layout_constraintStart_toStartOf="@+id/textViewNumberSearchHeader"
+        app:layout_constraintTop_toBottomOf="@+id/textViewNameSearchHeader"
         tools:ignore="TextContrastCheck" />
 
     <Button
-        android:id="@+id/buttonSearchEpisode"
+        android:id="@+id/buttonSearchEpisodeByName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
         android:minHeight="48dp"
-        android:onClick="searchEpisode"
+        android:onClick="searchEpisodeByName"
         android:text="@string/search"
         app:layout_constraintBottom_toBottomOf="@id/editTextEpisodeName"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSearchEpisodeByNumber"
         app:layout_constraintStart_toEndOf="@id/editTextEpisodeName"
         app:layout_constraintTop_toTopOf="@id/editTextEpisodeName" />
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
-        android:id="@+id/circularProgressIndicatorSearch"
+        android:id="@+id/circularProgressIndicatorSearchByName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:indeterminate="true"
         android:visibility="invisible"
-        app:layout_constraintBottom_toBottomOf="@id/buttonSearchEpisode"
-        app:layout_constraintEnd_toEndOf="@id/buttonSearchEpisode"
-        app:layout_constraintStart_toStartOf="@id/buttonSearchEpisode"
+        app:layout_constraintBottom_toBottomOf="@id/buttonSearchEpisodeByName"
+        app:layout_constraintEnd_toEndOf="@id/buttonSearchEpisodeByName"
+        app:layout_constraintStart_toStartOf="@id/buttonSearchEpisodeByName"
         app:layout_constraintTop_toTopOf="@id/editTextEpisodeName" />
 
     <Spinner
         android:id="@+id/spinnerEpisodes"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="20dp"
+        android:minHeight="48dp"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/buttonOpenEpisodeByName"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/buttonSearchEpisode" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextEpisodeName"
+        tools:ignore="SpeakableTextPresentCheck"
+        tools:visibility="visible" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/buttonOpenEpisodeByName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:onClick="openEpisode"
-        android:text="@string/submit"
+        android:text="@string/open_button"
         android:visibility="invisible"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/spinnerEpisodes" />
+        app:layout_constraintBottom_toBottomOf="@+id/spinnerEpisodes"
+        app:layout_constraintEnd_toEndOf="@+id/buttonSearchEpisodeByNumber"
+        app:layout_constraintStart_toEndOf="@+id/spinnerEpisodes"
+        app:layout_constraintTop_toTopOf="@+id/spinnerEpisodes"
+        tools:visibility="visible" />
+
+    <TextView
+        android:id="@+id/textViewNameSearchHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:text="@string/byname"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/textViewNumberSearchHeader"
+        app:layout_constraintTop_toBottomOf="@+id/editTextSeasonNumber" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

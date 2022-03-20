@@ -4,7 +4,7 @@
     <string name="search_episode">Vyhledat díly</string>
     <string name="search">Vyhledat</string>
     <string name="episode_hint">Název dílu</string>
-    <string name="submit">Potvrdit</string>
+    <string name="open_button">Otevřít</string>
 
     <string name="episode_name">Název:</string>
     <string name="premiere">Premiéra:</string>
@@ -35,8 +35,16 @@
     <string name="error_500">Došlo k interní chybě serveru!</string>
     <string name="error_401">Neplatná autorizace!</string>
     <string name="error_400">Chybný dotaz!</string>
-    <string name="no_internet">Není připojení k internetu!</string>
+    <string name="error_429">Příliš mnoho dotazů!</string>
+    <string name="no_internet">Nelze se připojit k serveru!</string>
+    <string name="not_filled">Prosím vyplňtě požadovaná pole!</string>
 
     <string name="previous">Předchozí </string>
     <string name="next">Následující</string>
+
+    <string name="season_prefix">S:</string>
+    <string name="episode_prefix">E:</string>
+    <string name="bynumber">Vyhledat podle čísla</string>
+    <string name="byname">Vyhledat podle názvu</string>
+    <string name="close">Zavřít</string>
 </resources>

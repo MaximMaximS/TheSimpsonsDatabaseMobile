@@ -7,13 +7,11 @@ import android.view.View;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.preference.PreferenceManager;
-import com.android.volley.Request;
-import com.android.volley.RequestQueue;
+import com.android.volley.*;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.switchmaterial.SwitchMaterial;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,20 +33,33 @@ public class EpisodeActivity extends AppCompatActivity {
         updateData();
     }
 
+    private void enableButtons(boolean enable) {
+        if (!enable) {
+            findViewById(R.id.switchWatched).setEnabled(false);
+        }
+        findViewById(R.id.buttonPrevious).setEnabled(enable);
+        findViewById(R.id.buttonNext).setEnabled(enable);
+        findViewById(R.id.textViewEpisodeId).setEnabled(enable);
+        findViewById(R.id.buttonDetails).setEnabled(enable);
+    }
+
     public void updateData() {
+
+        enableButtons(false);
         RequestQueue queue = Volley.newRequestQueue(this);
         View view = findViewById(android.R.id.content);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         String lang = preferences.getString("lang", "en");
-        String root = preferences.getString("address", "");
+        String root2 = preferences.getString("address", "");
 
-        if (root.equals("")) {
+        if (root2.equals("")) {
             Snackbar.make(view, R.string.no_api, Snackbar.LENGTH_SHORT).show();
             return;
         }
-        if (!root.endsWith("/")) {
-            root += "/";
+        if (!root2.endsWith("/")) {
+            root2 += "/";
         }
+        final String root = root2;
         String episodeUrl = root + "episode/" + episodeId;
 
         JsonObjectRequest episodeRequest = new JsonObjectRequest(Request.Method.GET, episodeUrl, null, response -> {
@@ -69,42 +80,56 @@ public class EpisodeActivity extends AppCompatActivity {
                 Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-       }, error -> {
+            String key = preferences.getString("key", "");
+            if (key.equals("")) {
+                Snackbar.make(view, R.string.no_key, Snackbar.LENGTH_SHORT).show();
+                return;
+            }
+            String watchedUrl = root + "watched/" + episodeId + "/?api_key=" + key;
+
+            queue.add(getWatched(view, watchedUrl));
+            enableButtons(true);
+            TextView epId = findViewById(R.id.textViewEpisodeId);
+            epId.setText(String.valueOf(episodeId));
+        }, error -> {
             // On error:
             // If network response was obtained
+            enableButtons(true);
+            String errMessage;
             if (error.networkResponse != null) {
-                int code = error.networkResponse.statusCode;
-                switch (code) {
+                switch (error.networkResponse.statusCode) {
+                    case 429:
+                        errMessage = getResources().getString(R.string.error_429);
+                        break;
                     case 404:
-                        Snackbar.make(view, R.string.error_404, Snackbar.LENGTH_SHORT).show();
+                        errMessage = getResources().getString(R.string.error_404);
                         break;
                     case 500:
-                        Snackbar.make(view, R.string.error_500, Snackbar.LENGTH_SHORT).show();
+                        errMessage = getResources().getString(R.string.error_500);
                         break;
                     default:
-                        Snackbar.make(view, getResources().getString(R.string.error) + "(" + code + ")", Snackbar.LENGTH_SHORT).show();
+                        errMessage = getResources().getString(R.string.error) + " (" + error.networkResponse.statusCode + ")";
                 }
+            } else if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                errMessage = getResources().getString(R.string.no_internet);
             } else {
-                Snackbar.make(view, getResources().getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
+                errMessage = error.getMessage();
+                if (errMessage == null) {
+                    errMessage = getResources().getString(R.string.error);
+                }
             }
+            Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).show();
         });
         queue.add(episodeRequest);
 
-        String key = preferences.getString("key", "");
-        if (key.equals("")) {
-            Snackbar.make(view, R.string.no_key, Snackbar.LENGTH_SHORT).show();
-            return;
-        }
-        String watchedUrl = root + "watched/" + episodeId + "/?api_key=" + key;
 
-        queue.add(getWatched(view, watchedUrl));
     }
 
     public void markEpisode(View view) {
-        SwitchMaterial switchMaterial = findViewById(R.id.switchWatched);
-        switchMaterial.setEnabled(false);
+        enableButtons(false);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         RequestQueue queue = Volley.newRequestQueue(this);
+        SwitchMaterial switchMaterial = findViewById(R.id.switchWatched);
         boolean action = switchMaterial.isChecked();
         JSONObject request = new JSONObject();
         try {
@@ -126,40 +151,49 @@ public class EpisodeActivity extends AppCompatActivity {
             String watchedUrl = root + "watched/" + episodeId + "/?api_key=" + key;
 
             JsonObjectRequest postWatched = new JsonObjectRequest(Request.Method.POST, watchedUrl, request, response -> {
-            // On response:
+                // On response:
                 try {
                     boolean watched = response.getBoolean("watched");
-                    switchMaterial.setEnabled(true);
+                    enableButtons(true);
                     switchMaterial.setChecked(watched);
                 } catch (JSONException e) {
                     Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
                     e.printStackTrace();
                 }
-           }, error -> {
-            // On error:
+            }, error -> {
+                // On error:
+                String errMessage;
                 if (error.networkResponse != null) {
-                    int code = error.networkResponse.statusCode;
-                    switch (code) {
+                    switch (error.networkResponse.statusCode) {
+                        case 429:
+                            errMessage = getResources().getString(R.string.error_429);
+                            break;
                         case 404:
-                            Snackbar.make(view, R.string.error_404, Snackbar.LENGTH_SHORT).show();
+                            errMessage = getResources().getString(R.string.error_404);
                             break;
                         case 500:
-                            Snackbar.make(view, R.string.error_500, Snackbar.LENGTH_SHORT).show();
+                            errMessage = getResources().getString(R.string.error_500);
                             break;
                         case 401:
-                            Snackbar.make(view, R.string.error_401, Snackbar.LENGTH_SHORT).show();
+                            errMessage = getResources().getString(R.string.error_401);
                             break;
                         case 400:
-                            Snackbar.make(view, R.string.error_400, Snackbar.LENGTH_SHORT).show();
+                            errMessage = getResources().getString(R.string.error_400);
                             break;
                         default:
-                            Snackbar.make(view, getResources().getString(R.string.error) + "(" + code + ")", Snackbar.LENGTH_SHORT).show();
+                            errMessage = getResources().getString(R.string.error) + " (" + error.networkResponse.statusCode + ")";
 
                     }
                     queue.add(getWatched(view, watchedUrl));
+                } else if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                    errMessage = getResources().getString(R.string.no_internet);
                 } else {
-                    Snackbar.make(view, getResources().getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
+                    errMessage = error.getMessage();
+                    if (errMessage == null) {
+                        errMessage = getResources().getString(R.string.error);
+                    }
                 }
+                Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).show();
 
             });
             queue.add(postWatched);
@@ -169,40 +203,48 @@ public class EpisodeActivity extends AppCompatActivity {
         }
     }
 
-    @Contract("_, _ -> new")
     private @NotNull JsonObjectRequest getWatched(View view, String watchedUrl) {
         return new JsonObjectRequest(Request.Method.GET, watchedUrl, null, response -> {
             // On response:
             try {
                 boolean watched = response.getBoolean("watched");
                 SwitchMaterial switchMaterial = findViewById(R.id.switchWatched);
-                switchMaterial.setEnabled(true);
+                enableButtons(true);
                 switchMaterial.setChecked(watched);
             } catch (JSONException e) {
                 Snackbar.make(findViewById(android.R.id.content), R.string.json_error, Snackbar.LENGTH_SHORT).show();
                 e.printStackTrace();
             }
-       }, error -> {
+        }, error -> {
             // On error:
             // If network response was obtained
+            String errMessage;
             if (error.networkResponse != null) {
-                int code = error.networkResponse.statusCode;
-                switch (code) {
+                switch (error.networkResponse.statusCode) {
+                    case 429:
+                        errMessage = getResources().getString(R.string.error_429);
+                        break;
                     case 404:
-                        Snackbar.make(view, R.string.error_404, Snackbar.LENGTH_SHORT).show();
+                        errMessage = getResources().getString(R.string.error_404);
                         break;
                     case 500:
-                        Snackbar.make(view, R.string.error_500, Snackbar.LENGTH_SHORT).show();
+                        errMessage = getResources().getString(R.string.error_500);
                         break;
                     case 401:
-                        Snackbar.make(view, R.string.error_401, Snackbar.LENGTH_SHORT).show();
+                        errMessage = getResources().getString(R.string.error_401);
                         break;
                     default:
-                        Snackbar.make(view, getResources().getString(R.string.error) + "(" + code + ")", Snackbar.LENGTH_SHORT).show();
+                        errMessage = getResources().getString(R.string.error) + " (" + error.networkResponse.statusCode + ")";
                 }
+            } else if (error instanceof TimeoutError || error instanceof NoConnectionError) {
+                errMessage = getResources().getString(R.string.no_internet);
             } else {
-                Snackbar.make(view, getResources().getString(R.string.no_internet), Snackbar.LENGTH_SHORT).show();
+                errMessage = error.getMessage();
+                if (errMessage == null) {
+                    errMessage = getResources().getString(R.string.error);
+                }
             }
+            Snackbar.make(view, errMessage, Snackbar.LENGTH_SHORT).show();
 
 
         });

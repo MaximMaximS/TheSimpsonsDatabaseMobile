@@ -15,7 +15,7 @@
         <activity
             android:name=".EpisodeDetailsActivity"
             android:exported="true"
-            android:label="@string/view_details"/>
+            android:label="@string/view_details" />
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
