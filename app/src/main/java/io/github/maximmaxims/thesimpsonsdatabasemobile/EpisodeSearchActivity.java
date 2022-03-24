@@ -159,7 +159,7 @@ public class EpisodeSearchActivity extends AppCompatActivity {
         try {
             JSONObject episode = episodes.getJSONObject(position);
             Intent intent = new Intent(this, EpisodeActivity.class);
-            intent.putExtra(EpisodeActivity.EPISODEID, episode.getInt("overallId"));
+            intent.putExtra(EpisodeActivity.EPISODEID, episode.getInt("_id"));
             startActivity(intent);
         } catch (JSONException e) {
             Snackbar.make(view, R.string.json_error, Snackbar.LENGTH_SHORT).show();
